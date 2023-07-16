@@ -181,6 +181,13 @@ sudo ln -snf /usr/local/cuda-11.8 /usr/local/cuda
 sudo reboot
 ```
 
+### 9.  To run the deepstream-app for test
+
+```
+cd /opt/nvidia/deepstream/deepstream-6.2/samples/configs/deepstream-app
+deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8.txt
+```
+
 </details>
 
 <details><summary>DeepStream 6.1.1</summary>
@@ -364,6 +371,14 @@ sudo ln -snf /usr/local/cuda-11.7 /usr/local/cuda
 sudo reboot
 ```
 
+
+### 9.  To run the deepstream-app for test
+
+```
+cd /opt/nvidia/deepstream/deepstream-6.1.1/samples/configs/deepstream-app
+deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8.txt
+```
+
 </details>
 
 <details><summary>DeepStream 6.1</summary>
@@ -543,9 +558,17 @@ sudo ln -snf /usr/local/cuda-11.6 /usr/local/cuda
 ```
 sudo reboot
 ```
+### 9.  To run the deepstream-app for test
+```
+cd /opt/nvidia/deepstream/deepstream-6.1.1/samples/configs/deepstream-app
+deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8.txt
+```
 
 </details>
 
+
+
+https://github.com/prince0310/deepstream-dgpu-installation/assets/85225054/b41c5102-944e-4b7e-9cc3-4ef99dc4c7d3
 
 
 
