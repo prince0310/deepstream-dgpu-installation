@@ -567,7 +567,6 @@ deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8
 </details>
 
 
-
 https://github.com/prince0310/deepstream-dgpu-installation/assets/85225054/b41c5102-944e-4b7e-9cc3-4ef99dc4c7d3
 
 
