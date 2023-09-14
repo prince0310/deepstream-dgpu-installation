@@ -1,10 +1,11 @@
 # deepstream-dgpu-installation
 # dGPU installation
 
-To install the DeepStream on dGPU (x86 platform), without docker, we need to do some steps to prepare the computer.
+## To install the DeepStream on dGPU (x86 platform), without docker, we need to do some steps to prepare the computer.
 
 
 <details><summary>DeepStream 6.3</summary>
+ 
 
 ### 1. Disable Secure Boot in BIOS and Must install 
 
@@ -93,6 +94,10 @@ cd /opt/nvidia/deepstream/deepstream-6.3/samples/configs/deepstream-app
 deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8.txt
 ```
 
+
+
+
+ 
 </details>
 
 <details><summary>DeepStream 6.2</summary>
@@ -659,7 +664,51 @@ deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8
 </details>
 
 
+
+## To install the DeepStream on dGPU (x86 platform), with docker.
+
+
+<details><summary>DeepStream 6.3</summary>
+ 
+## Prerequisites
+
+* Install docker-ce by following the [official instructions](https://docs.docker.com/engine/install).
+* Install ``nvidia-container-toolkit`` by following the [install-guide](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+* Get an NGC account and API key:
+
+    * Go to NGC and search the <b> DeepStream </b> in the  <b> Container </b> tab. This message is displayed: “Sign in to access the PULL feature of this repository”.
+
+    * Enter your Email address and click <b> Next </b>, or click <b>  Create an Account </b>.
+
+    * Choose your organization when prompted for <b> Organization/Team </b>.
+
+    * Click <b> Sign In</b>.
+
+* Log in to the NGC docker registry ``(nvcr.io)`` using the command ``docker login nvcr.io`` and enter the credentials:
+  
+### Commands to run a docker container:
+
+````
+# Pull the required docker.  Refer Docker Containers table to get docker container name.
+$ docker pull nvcr.io/nvidia/deepstream:6.3-samples
+# Step to run the docker
+$ export DISPLAY=:0
+$ xhost +
+$ docker run -it --rm --net=host --gpus all -e DISPLAY=$DISPLAY --device /dev/snd -v /tmp/.X11-unix/:/tmp/.X11-unix deepstream:6.3-samples
+````
+
+<b>Note </b>: With DS 6.3, DeepStream docker containers do not package libraries necessary for certain multimedia operations like audio data parsing, CPU decode, and CPU encode. This change could affect processing certain video streams/files like mp4 that include audio track. Run the below script inside the docker images to install additional packages (e.g. `gstreamer1.0-libav, gstreamer1.0-plugins-good`, gstreamer1.0-plugins-bad, gstreamer1.0-plugins-ugly as required) that might be necessary to use all of the DeepStreamSDK features: ```/opt/nvidia/deepstream/deepstream/user_additional_install.sh```
+
+
+
+### 7.  To run the deepstream-app for test
+
+```
+deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8.txt
+```
+ 
+</details>
+
+
 https://github.com/prince0310/deepstream-dgpu-installation/assets/85225054/b41c5102-944e-4b7e-9cc3-4ef99dc4c7d3
-
-
 
