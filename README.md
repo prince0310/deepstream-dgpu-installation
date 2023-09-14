@@ -3,6 +3,98 @@
 
 To install the DeepStream on dGPU (x86 platform), without docker, we need to do some steps to prepare the computer.
 
+
+<details><summary>DeepStream 6.3</summary>
+
+### 1. Disable Secure Boot in BIOS and Must install 
+
+* Ubuntu 20.04
+* GStreamer 1.16.3
+* NVIDIA driver 525.125.06
+* CUDA 12.1
+* TensorRT 8.5.3.1
+
+### 2. Install Dependencies
+```
+ sudo apt install \
+libssl1.1 \
+libgstreamer1.0-0 \
+gstreamer1.0-tools \
+gstreamer1.0-plugins-good \
+gstreamer1.0-plugins-bad \
+gstreamer1.0-plugins-ugly \
+gstreamer1.0-libav \
+libgstreamer-plugins-base1.0-dev \
+libgstrtspserver-1.0-0 \
+libjansson4 \
+libyaml-cpp-dev \
+libjsoncpp-dev \
+protobuf-compiler \
+gcc \
+make \
+git \
+python3
+```
+### 2.1.Install CUDA Toolkit 12.1
+
+```
+sudo apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/3bf863cc.pub
+sudo add-apt-repository "deb https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2004/x86_64/ /"
+sudo apt-get update
+sudo apt-get install cuda-toolkit-12-1
+```
+
+### 3. Install NVIDIA driver 530.41.03, for professional and consumer GPUs (GeForce/ NVIDIA RTX/ QUADRO)
+
+Download and install using NVIDIA driver 530.41.03 from NVIDIA Unix drivers page at: https://www.nvidia.com/download/driverResults.aspx/200481/en-us/
+
+```
+chmod 755 NVIDIA-Linux-x86_64-530.41.03.run
+sudo ./NVIDIA-Linux-x86_64-530.41.03.run --no-cc-version-check
+```
+
+### 4. Install TensorRT 8.5.3.1
+  ```
+  sudo apt-get install libnvinfer8=8.5.3-1+cuda11.8 libnvinfer-plugin8=8.5.3-1+cuda11.8 libnvparsers8=8.5.3-1+cuda11.8 \
+libnvonnxparsers8=8.5.3-1+cuda11.8 libnvinfer-bin=8.5.3-1+cuda11.8 libnvinfer-dev=8.5.3-1+cuda11.8 \
+libnvinfer-plugin-dev=8.5.3-1+cuda11.8 libnvparsers-dev=8.5.3-1+cuda11.8 libnvonnxparsers-dev=8.5.3-1+cuda11.8 \
+libnvinfer-samples=8.5.3-1+cuda11.8 libcudnn8=8.7.0.84-1+cuda11.8 libcudnn8-dev=8.7.0.84-1+cuda11.8 \
+python3-libnvinfer=8.5.3-1+cuda11.8 python3-libnvinfer-dev=8.5.3-1+cuda11.8
+  ```
+
+
+### 5. Install librdkafka (to enable Kafka protocol adaptor for message broker)
+
+```
+git clone https://github.com/edenhill/librdkafka.git
+cd librdkafka
+git reset --hard 7101c2310341ab3f4675fc565f64f0967e135a6a
+./configure
+make
+sudo make install
+sudo mkdir -p /opt/nvidia/deepstream/deepstream-6.3/lib
+sudo cp /usr/local/lib/librdkafka* /opt/nvidia/deepstream/deepstream-6.3/lib
+```
+
+### 6. Install the DeepStream SDK
+
+
+Download the DeepStream 6.3 dGPU Debian package deepstream-6.3_6.3.0-1_amd64.deb : https://catalog.ngc.nvidia.com/orgs/nvidia/resources/deepstream
+
+```
+sudo apt-get install ./deepstream-6.3_6.3.0-1_amd64.deb
+```
+
+
+### 7.  To run the deepstream-app for test
+
+```
+cd /opt/nvidia/deepstream/deepstream-6.3/samples/configs/deepstream-app
+deepstream-app -c source4_1080p_dec_infer-resnet_tracker_sgie_tiled_display_int8.txt
+```
+
+</details>
+
 <details><summary>DeepStream 6.2</summary>
 
 ### 1. Disable Secure Boot in BIOS
